@@ -17,8 +17,14 @@ Before writing code or dispatching tasks, trace the real flow end-to-end and sto
 
 1. **YAGNI:** Does this need to be built at all? If not, question the request.
 2. **Reuse:** Does a helper, pattern, standard library, or native feature already do this? Use it.
-3. **Simplicity First:** Can this be one line? Make it one line. No abstractions or "flexibility" that wasn't requested.
-4. **Surgical Changes:** Touch only what you must. Match existing style. Do not "improve" adjacent code, reformat, or refactor unbroken code.
+3. **Cognitive Simplicity (Anti-Smell):** Simplicity means low cognitive load, not fewer lines of code. Avoid "code golf."
+   - Guard clauses: Return early to avoid nested `if` blocks. Maximum nesting depth is 2.
+   - Declarative logic: Extract complex boolean chains (3+ `OR`/`AND` operators) into well-named variables or helper functions.
+   - Limit arguments: If a function requires more than 4 arguments, introduce a parameter object or configuration struct.
+   - No clever one-liners: Strictly forbid nested ternaries and multi-layered list comprehensions.
+   - Break up chains: Limit functional chaining (e.g., map/filter/reduce) to a maximum of 2 operations. Assign intermediate transformations to well-named variables.
+   - Explicit over implicit: Do not use shorthand truthiness hacks (e.g., `!!`, bitwise rounding). Use explicit, readable type comparisons.
+4. **Clean Surgical Changes:** Touch only what you must, but do not patch over bad design. If adding your target code violates the Anti-Smell rules above, perform a strictly local micro-refactoring (e.g., extract a helper function) before implementing the feature. Do not reformat or refactor unrelated adjacent code.
 5. **Clean Your Mess:** Remove imports/variables orphaned by your changes, but leave pre-existing dead code alone unless explicitly asked.
 
 ## Execution & Goal-Driven Problem Solving
