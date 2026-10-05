@@ -35,6 +35,7 @@ Before writing code or dispatching tasks, trace the real flow end-to-end and sto
 - **Verifiable Plans:** For multi-step tasks, state a brief plan before executing (`Step -> Verify`). Transform tasks into verifiable goals.
 - **Autonomy:** Once the plan is verified and authorized, continuously advance until met.
 - **Intentional Corners:** Mark deliberate simplifications with a `ponytail:` comment naming the ceiling and upgrade path.
+- **Forward Momentum:**  Treat completed answers and verified steps as closed. On subsequent turns, focus strictly on the current request delta. Do not summarize, re-verify, or relitigate previous outputs unless the user explicitly flags a problem with them.
 
 ## Testing and Verification
 

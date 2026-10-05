@@ -1,0 +1,3 @@
+/grill-me Based on the current project's requirements, create a highly directive and hallucination-free code refactoring plan detailed enough that it only requires mechanical execution. During the process of generating the refactoring plan, please continuously ask me follow-up questions until you are satisfied there are no doubts and absolutely no hallucinations. This refactoring plan must simultaneously cover architecture, code implementation, iterative updates to the corresponding documentation, and updates to the project management files themselves.
+
+/grill-me 基于当前项目的需求，做一个高度指导性且没有幻觉的详细到只需要机械执行的code改造计划。出改造计划的过程中，请不断对我进行追问，直到你认为没有任何疑虑，绝无幻觉为止。这份改造计划，必须同时涵盖架构、代码实施、相应文档的更新迭代与对项目本身管理的文件更新。
