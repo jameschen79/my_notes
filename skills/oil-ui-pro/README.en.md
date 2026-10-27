@@ -30,6 +30,8 @@ Tell your agent what you need, for example:
 
 Share any brand assets, screenshots, or existing project you have. It can start without references and only asks you questions when the deliverable is unclear.
 
+Intermediate candidates, screenshots, and media caches live in the project’s `.oil-ui` workspace. Final code and production assets are still written back to the project, and existing project conventions take precedence.
+
 ## How it works
 
 - **Explore distinct directions, then let you choose.** It first works out what the product is and how the best products in its category handle it, then derives a tone from the product itself and develops a few concrete directions. Each direction settles its first-screen layout before any copy is written, and it checks that the directions really differ. The previews go on one comparison page; you choose one and say what you like and dislike.
