@@ -52,11 +52,12 @@ Because subagents start with a blank context, **every prompt sent to an `Executo
 1. **Strict Scope & Ownership:**
    - Exact files/directories permitted to touch.
    - For `Reviewer` or Simplify agents, include the hard directive: *Strictly read-only. Do NOT mutate files via execute. Return findings inline in Markdown only.*
-2. **Code Quality Contract (The Ladder Rungs 3–5):**
+2. **Code Quality Contract:**
    - **Root Cause over Symptom:** Fix shared logic across callers rather than patching a single symptom path.
    - **Cognitive Simplicity (Anti-Smell):** Max nesting depth of 2 (use early-return guard clauses); extract boolean chains with 3+ `AND`/`OR` operators into named variables/helpers; max 4 function arguments (use a parameter object/struct if >4); no nested ternaries or multi-layer comprehensions; max 2 chained functional operations (`map`/`filter`/`reduce`); use explicit type comparisons instead of truthiness hacks (`!!`).
    - **Surgical Changes & Cleanup:** Perform local micro-refactoring if adding code violates Anti-Smell rules, but never reformat unrelated adjacent code. Delete orphaned imports/variables and temporary files created during the task; leave pre-existing dead code alone.
    - **Intentional Corners:** Mark deliberate simplifications with a `ponytail:` comment stating the ceiling and upgrade path.
+   - **Security (CWE Top 25):** Parameterize queries/commands (`CWE-89`/`CWE-78`), validate paths/URLs (`CWE-22`/`CWE-918`), enforce authz (`CWE-862`), bound resource allocation (`CWE-400`), and never hardcode secrets (`CWE-798`) or deserialize untrusted input (`CWE-502`).
 3. **Verifiable Success Criteria & Testing:**
    - Define exact inputs, expected outputs, and the verification command.
    - Do not write tests for reversible, low-impact changes. For non-trivial logic, leave **one** runnable check (assert-based self-check or single test file; no heavy frameworks) and delete temporary artifacts before returning.
@@ -75,7 +76,7 @@ Do not use ephemeral todo tools. Track all multi-step or multi-target progress i
 1. **Gate:** For new tasks, run Reverse Questioning and YAGNI/Reuse checks before planning. Write the initial plan and target checklist to `.teammode-state.md`.
 2. **Phase 1 (Explore):** Dispatch `Explorer` to trace end-to-end flow and grep all callers. *Fast-Path: Skip Phase 1 if target paths and operations are already deterministic (e.g., batch generation or known file targets).*
 3. **Phase 2 (Execute):** Dispatch `Executor`(s) with the **Subagent Dispatch Contract**. Use parallel chunked fan-out for disjoint multi-target tasks, updating `.teammode-state.md` after each wave.
-4. **Phase 3 (Verify):** Dispatch `Reviewer` to verify outputs against success criteria and Anti-Smell rules. For multi-target batch runs, run a single aggregated batch review rather than sequential per-item reviews. Loop back to Phase 2 only for failed `[!]` targets.
+4. **Phase 3 (Verify):** Dispatch `Reviewer` to audit outputs across Correctness, Security, and Cognitive Simplicity. For multi-target batch runs, run a single aggregated batch review rather than sequential per-item reviews. On `REJECT`, loop back to Phase 2 strictly for the failed `[!]` targets by passing `Reviewer`'s exact **Feedback Loop Prompt** directly to `Executor`.
 5. **Phase 4 (Simplify):** Trigger [Simplify](references/simplify.md) strictly before committing verified imperative code changes (>50 lines) or when explicitly requested by the user. Skip for generated data/config batches (e.g., SBOMs, lockfiles).  *The Orchestrator reviews the simplification findings and decides which to apply before proceeding.*
 6. **Deliver:** Delete `.teammode-state.md` (if all targets succeeded) and present the final result to the user using Minto Pyramid structure and ASD-STE100 English.
 

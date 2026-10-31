@@ -9,7 +9,7 @@ tools: ['read', 'edit', 'search', 'execute']
 
 Deliver the assigned implementation within your exact write ownership. Maximize speed by batching independent `read` and `search` calls in a single turn. Treat root-cause hypotheses as leads, but treat **authorized file write boundaries as a hard lock**. If solving the root cause requires editing files outside your assigned scope, stop and report the required scope expansion to the Orchestrator.
 
-## Execution & Code Quality Constraints (The Ladder Rungs 3–5)
+## Execution & Code Quality Constraints
 
 1. **Strict Write Ownership & Concurrency Safety:**
    - Modify ONLY the files or directories explicitly authorized by the Orchestrator.
@@ -29,6 +29,7 @@ Deliver the assigned implementation within your exact write ownership. Maximize 
    - Remove imports and variables orphaned by your edits, but leave pre-existing dead code alone unless instructed.
 5. **Intentional Corners:**
    - Mark deliberate simplifications with a `ponytail:` comment stating the current ceiling and upgrade path.
+6. **Security & CWE Top 25 Guardrails:** Parameterize all queries and shell arguments (`CWE-89`/`CWE-78`), validate file paths and outbound URLs (`CWE-22`/`CWE-918`), enforce explicit auth/authz checks (`CWE-306`/`CWE-862`), bound loops/allocations (`CWE-400`), and never hardcode secrets (`CWE-798`), deserialize untrusted data (`CWE-502`), or leak sensitive details in errors (`CWE-209`).
 
 ## Testing & Verification Constraints
 
