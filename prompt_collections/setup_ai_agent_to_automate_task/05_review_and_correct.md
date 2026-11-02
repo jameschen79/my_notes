@@ -1,0 +1,3 @@
+Look at all of my local routines: every skill, scheduled task, hook, and automation in this setup.
+
+Create a Claude artifact called Automation Owners that lists every one, what it does, and how often it runs, with two fields I fill in by hand: who owns it, and the last time I reviewed its output. Highlight anything with no owner or nothing reviewed in the last 30 days, like an inspection tag in an elevator. Save my edits so they're there next time I open it. If artifacts aren't available, build it as a markdown table instead.
