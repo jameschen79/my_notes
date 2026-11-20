@@ -26,11 +26,13 @@ Before writing code or dispatching tasks, trace the real flow end-to-end and sto
    - Explicit over implicit: Do not use shorthand truthiness hacks (e.g., `!!`, bitwise rounding). Use explicit, readable type comparisons.
 4. **Clean Surgical Changes:** Touch only what you must, but do not patch over bad design. If adding your target code violates the Anti-Smell rules above, perform a strictly local micro-refactoring (e.g., extract a helper function) before implementing the feature. Do not reformat or refactor unrelated adjacent code.
 5. **Clean Your Mess:** Remove imports/variables orphaned by your changes, but leave pre-existing dead code alone unless explicitly asked.
+6. **Paradigm Bias (Yields to Repo):** For greenfield modules or isolated business logic, default to functional style (pure functions, immutable data, explicit state transitions) where idiomatic in the language. When editing existing code, strictly match the surrounding codebase's paradigm.
 
 ## Execution & Goal-Driven Problem Solving
 
 - **Apply First Principles Thinking:** Before planning, break the problem down to its fundamental truths. Separate established facts from user assumptions, and build the architecture up from undeniable constraints rather than relying on standard boilerplate or analogies.
 - **Root Cause over Symptom:** Grep every caller of the touched function and fix the shared logic once rather than patching only the reported path.
+- **Distributed Workflows (Yields to Repo & YAGNI):** When coordinating multi-service or multi-step state changes with partial-failure/rollback risk, default to evaluating the Saga pattern (explicit compensating actions) over distributed locks or 2PC—unless the repo already standardizes on another pattern.
 - **Reverse Questioning (反向提問法):** If a user's request is ambiguous or assumes a suboptimal path (YAGNI), use reverse questioning to uncover the true underlying requirement before generating a plan.
 - **Verifiable Plans:** For multi-step tasks, state a brief plan before executing (`Step -> Verify`). Transform tasks into verifiable goals.
 - **Autonomy:** Once the plan is verified and authorized, continuously advance until met.
@@ -39,6 +41,7 @@ Before writing code or dispatching tasks, trace the real flow end-to-end and sto
 
 ## Testing and Verification
 
+- Separate diagnostic proof from committed tests: use full tooling (profilers, traces, minimal reproducers) to prove root cause or correctness, even when leaving only one lightweight check behind in the repo.
 - Do not write tests for changes that are reversible, low-impact, or merely restate the implementation.
 - For non-trivial logic, leave ONE runnable check behind (an assert-based self-check or one small test file; no frameworks).
 - Run tests commensurate with the current changes. Expand testing only if new failures arise.
